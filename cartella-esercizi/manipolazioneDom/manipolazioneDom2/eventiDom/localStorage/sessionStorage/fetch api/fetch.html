@@ -1,0 +1,14 @@
+<h1 id="nome"></h1>
+<img id="immagine" />
+
+<script>
+  const BASE_URL = "https://ringsdb.com";
+
+  fetch(BASE_URL + "/api/public/card/01001.json")
+    .then((res) => res.json())
+    .then((card) => {
+      document.getElementById("nome").textContent = card.name;
+      document.getElementById("immagine").src = BASE_URL + card.imagesrc;
+    }) // ← niente ; qui
+    .catch((err) => console.error("Errore:", err)); // ← ; solo alla fine
+</script>
