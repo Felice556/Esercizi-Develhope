@@ -9,6 +9,6 @@
     .then((card) => {
       document.getElementById("nome").textContent = card.name;
       document.getElementById("immagine").src = BASE_URL + card.imagesrc;
-    }) // ← niente ; qui
-    .catch((err) => console.error("Errore:", err)); // ← ; solo alla fine
+    }) 
+    .catch((err) => console.error("Errore:", err)); // ← ;
 </script>
