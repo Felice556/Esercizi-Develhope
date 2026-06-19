@@ -8,7 +8,7 @@ export type WelcomeProps = {
 export function Welcome({name = "World" , age = 0}: WelcomeProps) {
     return (
         <div>
-            <p>Welcome, {name}!</p>
+            <p>Welcome, <strong>{name}</strong>!</p>
             <Age age={age} />
             
         </div>
