@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import {InteractiveWelcome} from './interactiveWelcome'
+import {FocusableInput} from './focusableInput'
 
 
 
 
 
 const container = document.getElementById('root')!
-ReactDOM.createRoot(container).render(<InteractiveWelcome />)
+ReactDOM.createRoot(container).render(<FocusableInput />)
