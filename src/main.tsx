@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import {uncontrolledLogin} from "./uncontrolledLogin";
+import {InteractiveWelcome} from './interactiveWelcome'
+
 
 
 
 
 const container = document.getElementById('root')!
-ReactDOM.createRoot(container).render(<uncontrolledLogin />)
+ReactDOM.createRoot(container).render(<InteractiveWelcome />)
