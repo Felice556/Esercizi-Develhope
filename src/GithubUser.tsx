@@ -1,11 +1,7 @@
+import { useGithubUser } from './useGithubUser'
 
 export function GithubUser({username}: {username: string}) {
-    const [user, setUser] = useState<any>(null) 
-    useEffect(() => {
-        fetch(`https://api.github.com/users/${username}`)
-            .then(res => res.json())
-            .then(data => setUser(data))
-    }, [username])
+    const { user } = useGithubUser(username)
     if (!user) return <div>Loading...</div>
     return (
         <div>  
