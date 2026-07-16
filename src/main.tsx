@@ -1,6 +1,6 @@
 import { store } from './store';
-import { increment } from './CounterReducer'; // adatta il path
-import { addTodo } from './TodosReducer'; // adatta il path
+import { increment } from './CounterSlice';
+import { addTodo } from './TodoSlice';
 
 console.log('stato iniziale:', store.getState());
 

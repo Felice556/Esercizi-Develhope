@@ -1,10 +1,10 @@
-import { createStore, combineReducers } from 'redux';
-import { CounterReducer } from './CounterReducer';
-import { TodosReducer } from './TodosReducer';
+import { configureStore } from '@reduxjs/toolkit';
+import counterReducer from './CounterSlice';
+import todosReducer from './TodoSlice';
 
-const rootReducer = combineReducers({
-  counter: CounterReducer,
-  todos: TodosReducer,
+export const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+    todos: todosReducer,
+  },
 });
-
-export const store = createStore(rootReducer);
