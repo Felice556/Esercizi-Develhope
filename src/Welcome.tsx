@@ -1,8 +1,8 @@
 import { Age } from "./Age";
 import { Message } from "./Message";
 export type WelcomeProps = {
-    name?: string
-    age?: number
+    name?: string 
+    age?: number 
     
 }
 

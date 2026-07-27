@@ -1,4 +1,4 @@
-import { Welcome } from "./Welcome";
+
 export type AgeProps = {
     age?: number
 }

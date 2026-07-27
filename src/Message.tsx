@@ -1,9 +1,10 @@
-import { Welcome } from "./Welcome";
-import { Age } from "./Age";
+export type MessageProps = {
+    age?: number
+}
 
-export function Message() {
+export function Message({ age = 0 }: MessageProps) {
     return (
-         <div>
+        <div>
             {age > 18 ? (
                 <p>You are old enough!</p>
             ) : (
