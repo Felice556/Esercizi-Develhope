@@ -1,7 +1,15 @@
-import { describe, it, beforeEach, afterEach, vi, expect } from 'vitest'
+import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { GithubUser } from './GithubUser'
+
+function mockFetchResponse(data: unknown, ok = true, status = 200): Response {
+  return {
+    ok,
+    status,
+    json: () => Promise.resolve(data),
+  } as Response
+}
 
 describe('GithubUser', () => {
   beforeEach(() => {
@@ -13,7 +21,9 @@ describe('GithubUser', () => {
   })
 
   it('shows a loading state initially', () => {
-    globalThis.fetch = vi.fn(() => new Promise(() => {})) as any // Promise che non si risolve mai
+    vi.mocked(globalThis.fetch).mockImplementation(
+      () => new Promise(() => {}) // Promise che non si risolve mai
+    )
 
     render(<GithubUser username="octocat" />)
 
@@ -27,15 +37,10 @@ describe('GithubUser', () => {
       avatar_url: 'https://example.com/avatar.png',
     }
 
-    globalThis.fetch = vi.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve(mockUser),
-      })
-    ) as any
+    vi.mocked(globalThis.fetch).mockResolvedValue(mockFetchResponse(mockUser))
 
     render(<GithubUser username="octocat" />)
 
-    // Aspettiamo che il componente esca dallo stato di loading
     await waitFor(() => {
       expect(screen.getByText('The Octocat')).toBeInTheDocument()
     })
@@ -48,16 +53,34 @@ describe('GithubUser', () => {
   })
 
   it('calls fetch with the correct GitHub API URL', () => {
-    globalThis.fetch = vi.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve({}),
-      })
-    ) as any
+    vi.mocked(globalThis.fetch).mockResolvedValue(mockFetchResponse({}))
 
     render(<GithubUser username="octocat" />)
 
     expect(globalThis.fetch).toHaveBeenCalledWith(
       'https://api.github.com/users/octocat'
     )
+  })
+
+  it('shows an error message when the GitHub API returns a non-ok response', async () => {
+    vi.mocked(globalThis.fetch).mockResolvedValue(
+      mockFetchResponse({}, false, 404)
+    )
+
+    render(<GithubUser username="nonexistent-user-xyz" />)
+
+    await waitFor(() => {
+      expect(screen.getByText(/error/i)).toBeInTheDocument()
+    })
+  })
+
+  it('shows an error message when fetch rejects (network failure)', async () => {
+    vi.mocked(globalThis.fetch).mockRejectedValue(new Error('Network error'))
+
+    render(<GithubUser username="octocat" />)
+
+    await waitFor(() => {
+      expect(screen.getByText('Error: Network error')).toBeInTheDocument()
+    })
   })
 })
