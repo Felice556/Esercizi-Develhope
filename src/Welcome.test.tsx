@@ -14,19 +14,26 @@ describe('Welcome', () => {
 
   it('renders 5 Age components when age is 20 and name is John', () => {
     render(<Welcome age={20} name="John" />)
-    const ageElements = screen.getAllByText('Your age is 20')
+    const ageElements = screen.getAllByTestId('age-display')
     expect(ageElements).toHaveLength(5)
   })
 
   it('renders only 2 Age components when age is 10 and name is Mario', () => {
     render(<Welcome age={10} name="Mario" />)
-    const ageElements = screen.getAllByText('Your age is 10')
+    const ageElements = screen.getAllByTestId('age-display')
     expect(ageElements).toHaveLength(2)
   })
 
   it('renders only 1 Age component when age is 0 (default)', () => {
     render(<Welcome />)
-    const ageElements = screen.getAllByText('Your age is 0')
+    const ageElements = screen.getAllByTestId('age-display')
     expect(ageElements).toHaveLength(1)
+  })
+
+  it('does not render age > 18 conditional blocks when age is 5', () => {
+    render(<Welcome age={5} name="Mario" />)
+    // solo "sempre" e "truthy" sono vere → 2 elementi attesi, 0 dagli altri 3 blocchi
+    const ageElements = screen.queryAllByTestId('age-display')
+    expect(ageElements).toHaveLength(2)
   })
 })

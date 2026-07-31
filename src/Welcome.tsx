@@ -1,24 +1,25 @@
 import { Age } from "./Age";
 import { Message } from "./Message";
+
 export type WelcomeProps = {
-    name?: string 
-    age?: number 
-    
+    name?: string
+    age?: number
 }
 
-export function Welcome({name = "World" , age = 0}: WelcomeProps) {
+export function Welcome({ name = "World", age = 0 }: WelcomeProps) {
+    const conditions = [
+        true,
+        age > 18,
+        Boolean(age),
+        age > 18 && age < 65,
+        age > 18 && name === "John",
+    ]
+
     return (
         <div>
             <p>Welcome, <strong>{name}</strong>!</p>
-            <Age age={age} />
-            {age> 18 && <Age age={age} />}
-            {age && <Age age={age} />}
-            {age > 18 && age < 65 && <Age age={age} />}
-            {age > 18 && name === "John" && <Age age={age} />}
+            {conditions.map((show, i) => show && <Age key={i} age={age} />)}
             <Message age={age} />
-            
-            
         </div>
     )
-    
 }
