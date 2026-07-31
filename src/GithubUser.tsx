@@ -1,4 +1,4 @@
-
+import { useState, useEffect } from "react"
 export function GithubUser({username}: {username: string}) {
     const [user, setUser] = useState<any>(null) 
     useEffect(() => {
