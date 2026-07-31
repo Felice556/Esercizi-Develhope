@@ -1,9 +1,9 @@
-import React from 'react'
+
 import ReactDOM from 'react-dom/client'
-import {uncontrolledLogin} from "./uncontrolledLogin";
+import {UncontrolledLogin} from "./UncontrolledForm";
 
 
 
 
 const container = document.getElementById('root')!
-ReactDOM.createRoot(container).render(<uncontrolledLogin />)
+ReactDOM.createRoot(container).render(<UncontrolledLogin />)
